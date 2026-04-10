@@ -16,9 +16,14 @@ Basic Agentic Setup — a curated configuration for AI-powered development with 
     └── mcp-design-research.mdc   # Design tools, search, error monitoring
 
 .claude/
-└── settings.json     # MCP servers + hooks (Claude Code)
+└── settings.json     # Hooks configuration (Claude Code)
 
+.opencode/
+└── commands/         # Custom commands (OpenCode)
+
+.opencode.json        # MCP server configurations (OpenCode)
 CLAUDE.md             # All rules combined (Claude Code)
+OpenCode.md           # All rules combined (OpenCode)
 ```
 
 ## MCP Servers
@@ -104,6 +109,12 @@ Rules are stored in `.cursor/rules/` as `.mdc` files and always applied. They de
 
 All rules are consolidated in `CLAUDE.md` at the project root. Claude Code reads this file automatically at the start of each session.
 
+### OpenCode
+
+All rules are consolidated in `OpenCode.md` at the project root. OpenCode reads this file as a project memory file at the start of each session. Custom commands can be added as `.md` files in `.opencode/commands/`.
+
+> **Note:** OpenCode has been archived and continued under the name [Crush](https://github.com/charmbracelet/crush) by the Charm team.
+
 ## Environment Variables
 
 | Variable | Server |
@@ -125,5 +136,7 @@ Context Mode hooks protect the context window by indexing tool output:
 - **Claude Code** — configured in `.claude/settings.json` under `hooks`
 
 Both configurations run the same Context Mode hook commands to auto-index output before and after tool use, and on session stop.
+
+OpenCode does not currently support hooks. Use Context Mode MCP tools directly (`ctx_batch_execute`, `ctx_search`) for context window protection.
 
 Use `ctx stats` to see context savings, `ctx doctor` to diagnose issues, or `ctx purge` to reset the knowledge base.

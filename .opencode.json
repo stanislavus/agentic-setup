@@ -1,0 +1,202 @@
+{
+  "mcpServers": {
+    "Filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
+      "env": {}
+    },
+    "Sequential Thinking": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "env": {}
+    },
+    "Context7": {
+      "type": "sse",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {}
+    },
+    "Context Mode": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "context-mode"],
+      "env": {}
+    },
+    "Server Memory": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {}
+    },
+    "Git": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-git", "--repository", "."],
+      "env": {}
+    },
+    "GitHub": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "Serena": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["-p", "3.13", "--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "ide"],
+      "env": {}
+    },
+    "semgrep": {
+      "type": "sse",
+      "url": "https://mcp.semgrep.ai/mcp",
+      "headers": {}
+    },
+    "Figma": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-server-figma"],
+      "env": {
+        "FIGMA_ACCESS_TOKEN": "${FIGMA_ACCESS_TOKEN}"
+      }
+    },
+    "Pencil": {
+      "type": "stdio",
+      "command": "~/.pencil/mcp/opencode/out/mcp-server-darwin-arm64",
+      "args": ["--app", "opencode"],
+      "env": {}
+    },
+    "Chrome DevTools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "env": {}
+    },
+    "WebMCP": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@jason.today/webmcp@latest", "--mcp"],
+      "env": {}
+    },
+    "Playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "env": {}
+    },
+    "Apollo MCP": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "http://127.0.0.1:8000/mcp"],
+      "env": {}
+    },
+    "Sentry": {
+      "type": "sse",
+      "url": "https://mcp.sentry.dev/mcp",
+      "headers": {}
+    },
+    "supabase": {
+      "type": "sse",
+      "url": "https://mcp.supabase.com/mcp",
+      "headers": {}
+    },
+    "postgres": {
+      "type": "stdio",
+      "command": "postgres-mcp",
+      "args": ["--access-mode=unrestricted"],
+      "env": {
+        "DATABASE_URI": "postgresql://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DATABASE}"
+      }
+    },
+    "Docker": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["docker-mcp"],
+      "env": {}
+    },
+    "Podman": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "podman-mcp-server@latest"],
+      "env": {}
+    },
+    "k8s": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "kubernetes-mcp-server@latest"],
+      "env": {}
+    },
+    "Postman": {
+      "type": "sse",
+      "url": "https://mcp.postman.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${POSTMAN_API_KEY}"
+      }
+    },
+    "Postman Code": {
+      "type": "sse",
+      "url": "https://mcp.postman.com/code",
+      "headers": {
+        "Authorization": "Bearer ${POSTMAN_API_KEY}"
+      }
+    },
+    "Postman Minimal": {
+      "type": "sse",
+      "url": "https://mcp.postman.com/minimal",
+      "headers": {
+        "Authorization": "Bearer ${POSTMAN_API_KEY}"
+      }
+    },
+    "API specification": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "apidog-mcp-server@latest"],
+      "env": {
+        "APIDOG_API_BASE_URL": "${APIDOG_API_BASE_URL}"
+      }
+    },
+    "Trivy": {
+      "type": "stdio",
+      "command": "trivy",
+      "args": ["mcp"],
+      "env": {}
+    },
+    "ClickHouse": {
+      "type": "sse",
+      "url": "http://127.0.0.1:8000",
+      "headers": {
+        "Authorization": "Bearer ${CLICKHOUSE_TOKEN}"
+      }
+    },
+    "Tavily": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "tavily-mcp@latest"],
+      "env": {
+        "TAVILY_API_KEY": "${TAVILY_API_KEY}",
+        "DEFAULT_PARAMETERS": "{\"include_images\": true, \"max_results\": 15, \"search_depth\": \"advanced\"}"
+      }
+    },
+    "Exa": {
+      "type": "sse",
+      "url": "https://mcp.exa.ai/mcp",
+      "headers": {}
+    },
+    "AWS Core": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["awslabs.core-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      }
+    },
+    "Azure": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "msmcp-azure", "azmcp", "server", "start"],
+      "env": {}
+    }
+  }
+}
