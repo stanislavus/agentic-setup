@@ -1,0 +1,48 @@
+---
+description: General MCP server usage rules — tool selection priorities, context-mode integration, and universal best practices
+alwaysApply: true
+globs:
+---
+
+# MCP General Rules
+
+## Context Mode (Context Window Protection)
+
+- Context Mode hooks are active (see `.cursor/hooks.json`). They auto-index tool output to protect the context window.
+- Use `ctx_batch_execute` for research: runs multiple commands, auto-indexes, and enables search.
+- Use `ctx_search` for follow-up questions after indexing.
+- Use `ctx_execute` / `ctx_execute_file` for data analysis, log processing, and computation in the sandbox.
+- Do NOT use `ctx_execute` to create, modify, or overwrite files. Use native Write/Edit tools instead.
+- After `/clear` or `/compact`, the knowledge base is preserved. Use `ctx purge` to wipe it.
+
+## Sequential Thinking
+
+- Use Sequential Thinking for complex multi-step reasoning, architectural decisions, and debugging intricate logic chains.
+- NOT needed for straightforward tasks (file edits, simple queries, formatting).
+
+## Server Memory
+
+- Use Server Memory to persist key facts, decisions, and context across sessions.
+- Store: project conventions, team decisions, recurring patterns, important constraints.
+- Do NOT store: code that exists in files, git history, ephemeral state.
+
+## Filesystem
+
+- Use Filesystem MCP for cross-project file access when needed.
+- For files within the current workspace, prefer native editor tools (Read, Edit, Write) over Filesystem MCP.
+
+## Tool Selection Priority
+
+When multiple MCP servers can accomplish a task, prefer in this order:
+
+1. **Native editor tools** (Read, Edit, Write) — for direct file manipulation in the workspace
+2. **Context Mode** — for large output, research, and data processing
+3. **Domain-specific MCP** — use the most specialized server for the task
+4. **General-purpose fallback** — Filesystem, Shell, etc.
+
+## General Best Practices
+
+- Do NOT call multiple MCP servers for the same task. Pick the best one.
+- Do NOT pass secrets or tokens directly in tool arguments. Use environment variable references.
+- If an MCP server call fails, check the server's comment in `.cursor/mcp.json` to confirm its purpose before retrying.
+- When starting a new session, check which MCP servers are relevant to the current task before using them.

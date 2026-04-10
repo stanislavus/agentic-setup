@@ -1,0 +1,47 @@
+---
+description: Code intelligence, documentation, version control, and security scanning rules — Serena, Context7, Semgrep, Git, GitHub
+alwaysApply: true
+globs:
+---
+
+# Code Intelligence & Version Control Rules
+
+## Context7 — Documentation Lookup
+
+- When the user asks about a library, framework, SDK, API, CLI tool, or cloud service, use Context7 to fetch current documentation.
+- Steps: `resolve-library-id` → pick best match → `query-docs` with library ID and question.
+- Prefer Context7 over web search for library documentation. Training data may be outdated.
+- Use Context7 for: API syntax, configuration, version migration, library-specific debugging, setup instructions.
+- Do NOT use Context7 for: refactoring, writing scripts from scratch, debugging business logic, code review, general programming concepts.
+
+## Serena — Semantic Code Intelligence
+
+- Use Serena for intelligent, symbol-level code navigation instead of reading entire files.
+- Workflow: `get_symbols_overview` → `find_symbol` to locate → read only the symbol bodies needed.
+- Use `search_for_pattern` when symbol name or location is uncertain.
+- Prefer Serena for: symbol navigation, codebase exploration, understanding call graphs, refactoring.
+- Do NOT read entire files when Serena's symbolic tools suffice. Read full files only when necessary.
+
+## Semgrep — Static Analysis
+
+- Run Semgrep scans on code changes that involve:
+  - Authentication, authorization, or session handling
+  - User input processing and data validation
+  - File system operations
+  - Database queries
+  - Cryptographic operations
+- Use Semgrep for security-focused code reviews before committing sensitive code.
+- Do NOT run Semgrep on every minor change (formatting, comments, config). Use it where security matters.
+
+## Git MCP
+
+- Use Git MCP for repository operations: status, diff, log, branch management.
+- For complex git operations (merge, rebase), prefer running git CLI directly.
+- Use `--repository .` context — the server is scoped to the current project.
+
+## GitHub MCP
+
+- Use GitHub MCP for: issues, pull requests, code search, repository management, and any GitHub API task.
+- Requires `GITHUB_PERSONAL_ACCESS_TOKEN` environment variable.
+- Use GitHub MCP (not git CLI) when interacting with the GitHub platform (PRs, issues, reviews).
+- Use git CLI (not GitHub MCP) for local git operations (commit, branch, stash).

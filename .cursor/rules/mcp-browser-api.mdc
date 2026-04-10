@@ -1,0 +1,49 @@
+---
+description: Browser automation, debugging, API testing, and GraphQL rules — Chrome DevTools, Playwright, WebMCP, Postman, Apollo, API spec
+alwaysApply: true
+globs:
+---
+
+# Browser & API Rules
+
+## Chrome DevTools
+
+- Use Chrome DevTools MCP for: live debugging of running web applications.
+  - DOM inspection, CSS debugging, JavaScript console
+  - Network request/response inspection
+  - Performance profiling and memory snapshots
+  - Lighthouse audits (performance, accessibility, SEO)
+- Use for debugging existing pages. Use Playwright for automating interactions.
+- Accessible when a Chrome/Chromium browser is running with remote debugging enabled.
+
+## Playwright
+
+- Use Playwright MCP for: browser automation, E2E testing flows, automated screenshots.
+  - Navigate, click, fill forms, take screenshots, wait for elements
+- Prefer Playwright over Chrome DevTools when: running test sequences, automating repetitive browser tasks, generating screenshots.
+- Prefer Chrome DevTools over Playwright when: inspecting a live debugging session, analyzing network traffic, running audits.
+
+## WebMCP
+
+- Use WebMCP for: browsing websites, extracting content, and interacting with web pages without a browser GUI.
+- Prefer WebMCP over Playwright for simple content extraction (no interaction needed).
+- Prefer Playwright over WebMCP for multi-step interactions (clicking, form filling, navigation sequences).
+
+## Postman Suite
+
+- **Postman** — full API platform: manage collections, environments, run tests. Use for complete API workflows.
+- **Postman Code** — generate client SDK code from API requests. Use when implementing API clients.
+- **Postman Minimal** — lightweight request execution. Use for quick one-off API calls without full platform overhead.
+- Selection: Minimal for quick tests → Code for SDK generation → full Postman for complex API workflows.
+- Requires `POSTMAN_API_KEY` env var.
+
+## Apollo MCP
+
+- Use for GraphQL schema introspection, query execution, and exploring a local Apollo server.
+- Runs at `http://127.0.0.1:8000/mcp`. Ensure the Apollo server is running locally before use.
+
+## API Specification (Apidog)
+
+- Use to browse and query OpenAPI/Swagger specifications.
+- Useful when: implementing API endpoints from specs, generating types from schemas, validating API contracts.
+- Requires `APIDOG_API_BASE_URL` env var.

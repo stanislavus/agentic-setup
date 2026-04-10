@@ -1,0 +1,52 @@
+---
+description: Design tools, web search, error monitoring, and external service rules — Figma, Pencil, Tavily, Exa, Sentry
+alwaysApply: true
+globs:
+---
+
+# Design, Research & Monitoring Rules
+
+## Figma
+
+- Use Figma MCP to access design files: layouts, components, styles, and design tokens.
+- Workflow: fetch design data from Figma → use as reference for implementing UI.
+- Requires `FIGMA_ACCESS_TOKEN` env var.
+- Do NOT guess design specifications. Always fetch from Figma when implementing designs.
+
+## Pencil
+
+- Pencil edits `.pen` design files. These files are encrypted — ONLY access them via Pencil MCP tools.
+- Do NOT use Read, Grep, or any other tool to read `.pen` files. Always use Pencil MCP (`batch_get`, `batch_design`).
+- Workflow: `get_editor_state` → `open_document` → `batch_get` to explore → `batch_design` to modify.
+- Follow Pencil tool operation syntax exactly. Max 25 operations per `batch_design` call.
+
+## Tavily — Web Search
+
+- Use Tavily for: research tasks, finding current information, and gathering context on topics.
+- Configured for deep search with image support (`search_depth: advanced`, `max_results: 15`).
+- Requires `TAVILY_API_KEY` env var.
+- Prefer Tavily for: research queries, multi-source information gathering.
+- Prefer Context7 for: specific library/framework documentation.
+
+## Exa — AI Search
+
+- Use Exa for: high-quality web search and content extraction.
+- Prefer Exa when: needing high-relevance results, extracting content from specific URLs.
+- Prefer Tavily when: needing broader research with configurable depth and images.
+
+## Sentry — Error Monitoring
+
+- Use Sentry MCP to: investigate production errors, view stack traces, analyze performance issues, track release health.
+- Use when: debugging issues reported in production, checking error rates after deployments, analyzing performance bottlenecks.
+- Do NOT use Sentry for local development errors — use Chrome DevTools or terminal output instead.
+
+## Search Tool Selection Guide
+
+| Need | Tool |
+|---|---|
+| Library/framework docs | Context7 |
+| Broad web research | Tavily |
+| High-relevance search | Exa |
+| Website content extraction | WebMCP or Exa |
+| Codebase symbol search | Serena |
+| Pattern search in code | Serena or Grep |

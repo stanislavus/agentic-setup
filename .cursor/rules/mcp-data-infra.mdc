@@ -1,0 +1,56 @@
+---
+description: Database access, cloud infrastructure, container management, and security scanning rules
+alwaysApply: true
+globs:
+---
+
+# Data & Infrastructure Rules
+
+## PostgreSQL
+
+- Use postgres MCP for direct database access: queries, schema inspection, migrations verification.
+- Runs with `--access-mode=unrestricted`. Be cautious with write operations (INSERT, UPDATE, DELETE, DROP).
+- Always use parameterized queries. Never concatenate user input into SQL.
+- Before running DDL or destructive queries, confirm with the user.
+- Requires env vars: `POSTGRES_USERNAME`, `POSTGRES_PASSWORD`, `POSTGRES_DATABASE`.
+
+## ClickHouse
+
+- Use for analytical queries on columnar data — aggregations, time-series, large-scale analytics.
+- Accessible at `http://127.0.0.1:8000`. Requires `CLICKHOUSE_TOKEN` env var.
+- Prefer ClickHouse over Postgres for: analytics dashboards, time-series data, log aggregation, large aggregations.
+- Prefer Postgres over ClickHouse for: transactional data, relational queries, CRUD operations.
+
+## Supabase
+
+- Use Supabase MCP for: database management, auth configuration, storage buckets, edge functions.
+- Prefer Supabase over direct Postgres when working within a Supabase project (handles auth, policies, etc.).
+- For raw SQL on a Supabase database, the postgres MCP may be more direct.
+
+## Docker & Podman
+
+- Use Docker MCP by default for container management.
+- Use Podman MCP only when: Docker daemon is unavailable, rootless containers are required, or user explicitly asks.
+- Both support: build, run, stop, list containers and images.
+- Do NOT run both Docker and Podman MCP for the same task.
+
+## Kubernetes (k8s)
+
+- Use k8s MCP for: pod management, deployment status, service inspection, log retrieval, resource scaling.
+- Before modifying cluster resources, always show the current state first.
+- Use `kubectl` CLI directly for operations not covered by the MCP server.
+
+## AWS Core & Azure
+
+- Use AWS Core MCP for: S3, Lambda, SQS, SNS, DynamoDB, and general AWS API access.
+- Use Azure MCP for: resource groups, VMs, storage accounts, and Azure infrastructure.
+- For infrastructure-as-code (Terraform, Pulumi), use the cloud MCPs to verify deployed state, not to write IaC files.
+- Both require appropriate CLI authentication (`aws configure`, `az login`) before use.
+
+## Trivy — Security Scanning
+
+- Run Trivy scans on:
+  - Docker images before deployment
+  - Kubernetes manifests for misconfigurations
+  - IaC files (Terraform, CloudFormation) for security issues
+- Use Trivy alongside Semgrep: Trivy for infrastructure/containers, Semgrep for application code.
