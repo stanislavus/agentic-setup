@@ -1,6 +1,47 @@
-# Project: agentic-setup
+# CLAUDE.md
 
-Basic Agentic Setup — a curated configuration for AI-powered development.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+This is a **configuration-only repository** — no build, no tests, no application code. It provides a curated collection of MCP server configurations, usage rules, and hooks for three AI coding tools: **Cursor**, **Claude Code**, and **OpenCode**.
+
+## Architecture
+
+The same 27 MCP servers are configured for all three tools, but in different formats:
+
+| Config | Cursor | Claude Code | OpenCode |
+|---|---|---|---|
+| MCP servers | `.cursor/mcp.json` | (external) | `.opencode.json` |
+| Rules | `.cursor/rules/*.mdc` (5 files) | `CLAUDE.md` | `OpenCode.md` |
+| Hooks | `.cursor/hooks.json` | `.claude/settings.json` | Not supported |
+
+When modifying MCP server configs, keep all three sources in sync:
+- Cursor uses `mcp.json` with optional `"comment"` fields (JSONC)
+- OpenCode uses `.opencode.json` with explicit `"type": "stdio"` or `"type": "sse"` fields
+- Claude Code's `mcpServers` are managed externally (not in this repo's `.claude/settings.json`, which only contains hooks)
+
+When modifying rules, update all three rule sources:
+- Cursor: individual `.mdc` files in `.cursor/rules/` (with frontmatter)
+- Claude Code: `CLAUDE.md` (plain markdown)
+- OpenCode: `OpenCode.md` (plain markdown, uses tool names like `view`/`write`/`edit`/`bash` instead of `Read`/`Write`/`Edit`/`Bash`)
+
+## Rules Format Differences
+
+- **Cursor** `.mdc` files require frontmatter (`description`, `alwaysApply: true`, `globs`)
+- **Claude Code** `CLAUDE.md` is plain markdown, read automatically at session start
+- **OpenCode** `OpenCode.md` is a project memory file, uses its own built-in tool names
+- Custom commands for OpenCode go in `.opencode/commands/` as `.md` files
+
+## Env Variable Syntax
+
+| Tool | Syntax |
+|---|---|
+| Cursor | `${env:VAR}` |
+| Claude Code | `${env:VAR}` |
+| OpenCode | `${VAR}` |
+
+Required env vars: `CONTEXT7_API_KEY`, `GITHUB_PERSONAL_ACCESS_TOKEN`, `FIGMA_ACCESS_TOKEN`, `POSTGRES_USERNAME`, `POSTGRES_PASSWORD`, `POSTGRES_DATABASE`, `CLICKHOUSE_TOKEN`, `TAVILY_API_KEY`, `POSTMAN_API_KEY`, `APIDOG_API_BASE_URL`
 
 ## MCP Server Rules
 
