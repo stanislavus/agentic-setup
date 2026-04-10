@@ -1,19 +1,24 @@
 # agentic-setup
 
-Basic Agentic Setup — a curated configuration for AI-powered development with Cursor.
+Basic Agentic Setup — a curated configuration for AI-powered development with Cursor and Claude Code.
 
 ## Structure
 
 ```
 .cursor/
-├── mcp.json          # MCP server configurations
-├── hooks.json        # Context Mode hooks (pre/post tool use)
+├── mcp.json          # MCP server configurations (Cursor)
+├── hooks.json        # Context Mode hooks (Cursor)
 └── rules/
     ├── mcp-general.mdc           # General MCP usage & tool selection priorities
     ├── mcp-code.mdc              # Code intelligence, docs, version control, security
     ├── mcp-data-infra.mdc        # Databases, containers, cloud, infrastructure
     ├── mcp-browser-api.mdc       # Browser automation, debugging, API testing
     └── mcp-design-research.mdc   # Design tools, search, error monitoring
+
+.claude/
+└── settings.json     # MCP servers + hooks (Claude Code)
+
+CLAUDE.md             # All rules combined (Claude Code)
 ```
 
 ## MCP Servers
@@ -89,18 +94,17 @@ Basic Agentic Setup — a curated configuration for AI-powered development with 
 |---|---|
 | **Sentry** | Error tracking, performance monitoring, release health |
 
-## Cursor Rules
+## Rules
 
-Rules are stored in `.cursor/rules/` and are always applied during sessions. They define:
+### Cursor
 
-- **Tool selection priorities** — which MCP server to prefer when multiple can handle a task
-- **Domain-specific workflows** — step-by-step guidance for each server
-- **Safety constraints** — confirmation requirements for destructive operations
-- **Search tool guide** — when to use Context7 vs Tavily vs Exa vs Serena
+Rules are stored in `.cursor/rules/` as `.mdc` files and always applied. They define tool selection priorities, domain-specific workflows, safety constraints, and a search tool guide.
+
+### Claude Code
+
+All rules are consolidated in `CLAUDE.md` at the project root. Claude Code reads this file automatically at the start of each session.
 
 ## Environment Variables
-
-The following environment variables are required by MCP servers:
 
 | Variable | Server |
 |---|---|
@@ -115,10 +119,11 @@ The following environment variables are required by MCP servers:
 
 ## Hooks
 
-Context Mode hooks are configured in `.cursor/hooks.json`:
+Context Mode hooks protect the context window by indexing tool output:
 
-- **preToolUse** — intercepts Shell, Read, Grep, WebFetch, and Context Mode tools to index output
-- **postToolUse** — indexes tool results after execution
-- **stop** — processes remaining data when the session ends
+- **Cursor** — configured in `.cursor/hooks.json`
+- **Claude Code** — configured in `.claude/settings.json` under `hooks`
+
+Both configurations run the same Context Mode hook commands to auto-index output before and after tool use, and on session stop.
 
 Use `ctx stats` to see context savings, `ctx doctor` to diagnose issues, or `ctx purge` to reset the knowledge base.
