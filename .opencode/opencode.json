@@ -1,0 +1,10 @@
+{
+  "permission": {
+    "read": {
+      "/Users/stanislavus/Developer/agentic-setup/.opencode/get-shit-done/*": "allow"
+    },
+    "external_directory": {
+      "/Users/stanislavus/Developer/agentic-setup/.opencode/get-shit-done/*": "allow"
+    }
+  }
+}
